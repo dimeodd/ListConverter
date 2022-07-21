@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Converter</title>
+
+    <script>
+        function Convert() {
+            var fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.onchange = readText;
+            fileInput.accept = '.txt';
+
+            fileInput.click();
+            fileInput.remove();
+
+            async function readText(event) {
+                const file = event.target.files.item(0);
+                const text = await file.text();
+
+                var data = ChangeData(text);
+                download('List with index.txt', data, 'text/txt');
+            }
+        }
+
+        function download(name, text, type) {
+            var a = window.document.createElement('a');
+            var file = new Blob([text], { type: type });
+            a.href = URL.createObjectURL(file);
+            a.download = name;
+
+            a.click();
+            a.remove();
+        }
+
+        function ChangeData(data) {
+            if (!data) alert("Файл пуст")
+            var lines = data.split('\n');
+
+            var i = 0;
+            for (let i = 0, iMax = lines.length; i < iMax; i++) {
+                if (lines[i].includes(',')) {
+                    alert('Строка ' + (i + 1) + ' содержит запятую')
+                    throw ("ошибка 1");
+                }
+
+                if (!lines[i] || lines[i].length === 0)
+                    lines[i] = i.toString() + ',none';
+                else
+                    lines[i] = i.toString() + ',' + lines[i];
+            }
+            return lines.join('\n');
+        }
+    </script>
+</head>
+
+<body>
+    <button onclick="Convert()">Конвертировать</button>
+</body>
+
+</html>
