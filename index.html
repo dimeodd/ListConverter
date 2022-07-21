@@ -47,9 +47,9 @@
                 }
 
                 if (!lines[i] || lines[i].length === 0)
-                    lines[i] = i.toString() + ',none';
+                    lines[i] = (i + 1).toString() + ',none';
                 else
-                    lines[i] = i.toString() + ',' + lines[i];
+                    lines[i] = (i + 1).toString() + ',' + lines[i];
             }
             return lines.join('\n');
         }
