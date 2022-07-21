@@ -54,10 +54,44 @@
             return lines.join('\n');
         }
     </script>
+    <style>
+        td{
+            /* width: 60px;  */
+           /* height:60px; */
+            border: solid 1px silver; 
+            text-align:left;
+        }
+    </style>
 </head>
 
 <body>
     <button onclick="Convert()">Конвертировать</button>
+    <br>
+    <br>
+    Нельзя использовать запятые!
+    <br>
+    <br>
+    Пример конвертации:
+    <table>
+        <tbody>
+            <tr>
+                <td>До</td>
+                <td>После</td>
+            </tr>
+            <tr>
+                <td>yaz<br>
+                    sterled<br>
+                    <br>
+                    boat1<br>
+                    boat2</td>
+                <td>1,yaz<br>
+                    2,sterled<br>
+                    3,none<br>
+                    4,boat1<br>
+                    5,boat2</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 
 </html>
