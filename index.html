@@ -46,7 +46,7 @@
                     throw ("ошибка 1");
                 }
 
-                if (!lines[i] || lines[i].length === 0)
+                if (!lines[i] || lines[i].length < 2)
                     lines[i] = (i + 1).toString() + ',none';
                 else
                     lines[i] = (i + 1).toString() + ',' + lines[i];
