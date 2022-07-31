@@ -20,8 +20,27 @@
                 const file = event.target.files.item(0);
                 const text = await file.text();
 
+
                 var data = ChangeData(text);
                 download('List with index.txt', data, 'text/txt');
+            }
+        }
+        function ConvertToJson() {
+            var fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.onchange = readText;
+            fileInput.accept = '.txt';
+
+            fileInput.click();
+            fileInput.remove();
+
+            async function readText(event) {
+                const file = event.target.files.item(0);
+                const text = await file.text();
+
+                var data = ChangeData(text);
+                data = 'var items_list = ' + JSON.stringify(ToJson(data)) + ';';
+                download('ItemsList.js', data, 'text/js');
             }
         }
 
@@ -36,7 +55,8 @@
         }
 
         function ChangeData(data) {
-            if (!data) alert("Файл пуст")
+            if (!data) alert("Файл пуст");
+            data = data.split("\r").join("");
             var lines = data.split('\n');
 
             var i = 0;
@@ -46,26 +66,31 @@
                     throw ("ошибка 1");
                 }
 
-                if (!lines[i] || lines[i].length < 2)
+                if (!lines[i] || lines[i].length < 1)
                     lines[i] = (i + 1).toString() + ',none';
                 else
                     lines[i] = (i + 1).toString() + ',' + lines[i];
             }
             return lines.join('\n');
         }
+        function ToJson(data) {
+            if (!data) alert("Файл пуст")
+            return data.split('\n');
+        }
     </script>
     <style>
-        td{
+        td {
             /* width: 60px;  */
-           /* height:60px; */
-            border: solid 1px silver; 
-            text-align:left;
+            /* height:60px; */
+            border: solid 1px silver;
+            text-align: left;
         }
     </style>
 </head>
 
 <body>
-    <button onclick="Convert()">Конвертировать</button>
+    Конвертировать: <button onclick="Convert()">to UE4</button>
+    <button onclick="ConvertToJson()">to .json</button>
     <br>
     <br>
     Нельзя использовать запятые!
