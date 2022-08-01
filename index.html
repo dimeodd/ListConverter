@@ -7,41 +7,38 @@
     <title>Converter</title>
 
     <script>
-        function Convert() {
+        function Convert(func) {
             var fileInput = document.createElement('input');
             fileInput.type = 'file';
-            fileInput.onchange = readText;
+            fileInput.onchange = func;
             fileInput.accept = '.txt';
 
             fileInput.click();
             fileInput.remove();
-
-            async function readText(event) {
-                const file = event.target.files.item(0);
-                const text = await file.text();
-
-
-                var data = ChangeData(text);
-                download('List with index.txt', data, 'text/txt');
-            }
         }
-        function ConvertToJson() {
-            var fileInput = document.createElement('input');
-            fileInput.type = 'file';
-            fileInput.onchange = readText;
-            fileInput.accept = '.txt';
 
-            fileInput.click();
-            fileInput.remove();
+        async function ToUE4(event) {
+            const file = event.target.files.item(0);
+            const text = await file.text();
 
-            async function readText(event) {
-                const file = event.target.files.item(0);
-                const text = await file.text();
+            var data = ChangeData(text);
+            download('List with index.txt', data, 'text/txt');
+        }
+        async function ToJson_Items(event) {
+            const file = event.target.files.item(0);
+            const text = await file.text();
 
-                var data = ChangeData(text);
-                data = 'var items_list = ' + JSON.stringify(ToJson(data)) + ';';
-                download('ItemsList.js', data, 'text/js');
-            }
+            var data = ChangeData(text);
+            data = 'var items_list = ' + JSON.stringify(ToJson(data)) + ';';
+            download('ItemsList.js', data, 'text/js');
+        }
+        async function ToJson_Char(event) {
+            const file = event.target.files.item(0);
+            const text = await file.text();
+
+            var data = ChangeData(text);
+            data = 'var char_list = ' + JSON.stringify(ToJson(data)) + ';';
+            download('CharList.js', data, 'text/js');
         }
 
         function download(name, text, type) {
@@ -89,8 +86,10 @@
 </head>
 
 <body>
-    Конвертировать: <button onclick="Convert()">to UE4 .txt</button>
-    <button onclick="ConvertToJson()">to .js</button>
+    Конвертировать ItemList: <button onclick="Convert(ToUE4)">to UE4 .txt</button>
+    <button onclick="Convert(ToJson_Items)">to .js</button>
+    <br>
+    Конвертировать CharList: <button onclick="Convert(ToJson_Char)">to .js</button>
     <br>
     <br>
     Нельзя использовать запятые!
@@ -118,5 +117,4 @@
         </tbody>
     </table>
 </body>
-
 </html>
